@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div className="min-h-screen font-mono flex flex-col items-center justify-center">
       <div className="text-center">
-        <h1 className="text-3xl mb-8">
+        <h1 className="text-3xl mb-8 text-glow">
           Welcome To Frederick's Profile, Unknown User
         </h1>
         <div className="flex justify-center mb-4">
@@ -19,7 +19,7 @@ const Home = () => {
             />
           </div>
         </div>
-        <p className="text-lg">Choose your path...</p>
+        <p className="text-lg text-glow">Choose your path...</p>
       </div>
     </div>
   );

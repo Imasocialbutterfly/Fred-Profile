@@ -30,4 +30,8 @@ main {
   .text-balance {
     text-wrap: balance;
   }
+  .text-glow {
+    color: #7fff00;
+    text-shadow: 0 0 5px #7fff00, 0 0 10px #7fff00, 0 0 15px #7fff00, 0 0 20px #7fff00;
+  }
 }
