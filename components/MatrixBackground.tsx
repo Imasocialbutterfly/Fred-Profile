@@ -12,8 +12,10 @@ const MatrixBackground = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    let animationId: number;
+    const fontSize = 16;
+    let columns: number;
+    const rainDrops: number[] = [];
 
     const katakana =
       "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
@@ -21,14 +23,14 @@ const MatrixBackground = () => {
     const nums = "0123456789";
     const alphabet = katakana + latin + nums;
 
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-
-    const rainDrops: number[] = [];
-
-    for (let x = 0; x < columns; x++) {
-      rainDrops[x] = 1;
-    }
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      columns = canvas.width / fontSize
+      for (let x = 0; x < columns; x++) {
+        rainDrops[x] = 1;
+      }
+    };
 
     const draw = () => {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
@@ -50,17 +52,18 @@ const MatrixBackground = () => {
       }
     };
 
-    const interval = setInterval(draw, 30);
+    const animate = () => {
+      draw();
+      animationId = requestAnimationFrame(animate)
+    }
 
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    handleResize()
+    animate()
 
     window.addEventListener("resize", handleResize);
 
     return () => {
-      clearInterval(interval);
+      cancelAnimationFrame(animationId)
       window.removeEventListener("resize", handleResize);
     };
   }, []);
@@ -68,8 +71,12 @@ const MatrixBackground = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full -z-10"
-      style={{ backgroundColor: "black" }}
+      className="fixed top-0 left-0 -z-10"
+      style={{ 
+        backgroundColor: "black", 
+        width: "100vw",
+        height: "100vh"
+      }}
     />
   );
 };

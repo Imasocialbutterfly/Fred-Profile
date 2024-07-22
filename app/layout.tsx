@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <MatrixBackground />
-        <main className="relative z-10">
+        <main className="relative z-10 w-full">
           {children}
         </main>
       </body>
