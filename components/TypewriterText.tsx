@@ -1,43 +1,56 @@
-"use client";
-
 import React, { useCallback, useEffect, useState } from "react";
 
 interface TypewriterTextProps {
   text: string;
+  startDelay?: number;
+  onComplete?: () => void;
 }
 
-const TypewriterText = ({ text }: TypewriterTextProps) => {
+const TypewriterText = ({
+  text,
+  startDelay = 0,
+  onComplete,
+}: TypewriterTextProps) => {
   const [dispalyedText, setDisplayedText] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
+  const [isComplete, setIsComplete] = useState(false);
 
   const typeCharacter = useCallback(() => {
     setDisplayedText((prev) => {
-      if(prev.length < text.length) {
+      if (prev.length < text.length) {
         return text.slice(0, prev.length + 1);
       }
-      return prev
-    })
-  }, [text])
+      if (!isComplete) {
+        setIsComplete(true);
+        onComplete?.();
+      }
+      return prev;
+    });
+  }, [text, onComplete, isComplete]);
 
   useEffect(() => {
-    setDisplayedText("")
-
-    const typingInterval = setInterval(typeCharacter, 100)
+    const startTimeout = setTimeout(() => {
+      const typingInterval = setInterval(typeCharacter, 100);
+      return () => clearInterval(typingInterval);
+    }, startDelay);
 
     const cursorBlinkInterval = setInterval(() => {
-      setCursorVisible((prev) => !prev)
-    }, 500)
+      setCursorVisible((prev) => !prev);
+    }, 500);
 
     return () => {
-      clearInterval(typingInterval)
-      clearInterval(cursorBlinkInterval)
-    }
-  }, [text, typeCharacter])
+      clearTimeout(startTimeout);
+      clearInterval(cursorBlinkInterval);
+    };
+  }, [typeCharacter, startDelay]);
 
   return (
-    <span>
+    <span className="relative">
       {dispalyedText}
-      {cursorVisible && <span>|</span>}
+      <span className="relative">
+        &#160;
+        {cursorVisible && <span className="absolute right-0 top-0">|</span>}
+      </span>
     </span>
   );
 };
