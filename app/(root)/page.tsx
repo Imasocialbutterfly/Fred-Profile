@@ -1,13 +1,14 @@
 "use client";
 
+import MatrixBackground from "@/components/MatrixBackground";
 import TypewriterText from "@/components/TypewriterText";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Home = () => {
-  const router = useRouter()
-  
+  const router = useRouter();
+
   const [showTitle, setShowTitle] = useState(true);
   const [showImageAndPath, setShowImageAndPath] = useState(false);
   const [showPillChoice, setShowPillChoice] = useState(false);
@@ -31,7 +32,8 @@ const Home = () => {
 
   return (
     <div className="min-h-screen font-mono flex flex-col items-center justify-center">
-      <div className="text-center">
+      <MatrixBackground />
+      <div className="text-center relative z-10">
         {showTitle && (
           <h1 className="text-3xl mb-8 text-glow animate-fade-in">
             <TypewriterText
@@ -70,9 +72,9 @@ const Home = () => {
           <div className="animate-fade-in">
             <div className="flex justify-center space-x-16">
               <div className="flex flex-col items-center">
-                <div 
+                <div
                   className="w-40 h-40 relative cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 group mb-2"
-                  onClick={() => router.push('/about')}
+                  onClick={() => router.push("/about")}
                 >
                   <Image
                     src="/DSC06706.jpg"
@@ -87,9 +89,9 @@ const Home = () => {
                 </p>
               </div>
               <div className="flex flex-col items-center">
-                <div 
+                <div
                   className="w-40 h-40 relative cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 group mb-2"
-                  onClick={() => router.push('/projects')}
+                  onClick={() => router.push("/projects")}
                 >
                   <Image
                     src="/Screenshot (73).png"
@@ -100,13 +102,13 @@ const Home = () => {
                   />
                 </div>
                 <p className="text-lg text-glow animate-fade-in">
-                  <TypewriterText text="Projects" startDelay={1000} />
+                  <TypewriterText text="Projects" startDelay={2500} />
                 </p>
               </div>
               <div className="flex flex-col items-center">
-                <div 
+                <div
                   className="w-40 h-40 relative cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 group mb-2"
-                  onClick={() => router.push('/contact')}
+                  onClick={() => router.push("/contact")}
                 >
                   <Image
                     src="/IMG_3698.JPG"
@@ -117,7 +119,11 @@ const Home = () => {
                   />
                 </div>
                 <p className="text-lg text-glow animate-fade-in">
-                  <TypewriterText text="Contact" startDelay={1000} />
+                  <TypewriterText
+                    text="Contact"
+                    startDelay={4000}
+                    showCursorAfterTyping={true}
+                  />
                 </p>
               </div>
             </div>

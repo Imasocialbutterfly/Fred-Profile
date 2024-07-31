@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import MatrixBackground from "@/components/MatrixBackground";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MatrixBackground />
-        <main className="relative z-10 w-full">
-          {children}
-        </main>
+        <main className="w-full">{children}</main>
       </body>
     </html>
   );
