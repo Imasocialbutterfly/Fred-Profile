@@ -1,9 +1,54 @@
-const Contact = () => {
-    return (
-        <div>
-            Contact
-        </div>
-    )
-}
+"use client";
 
-export default Contact
+import ApocalypticBackground from "@/components/ApocalypticBackground";
+import TypewriterText from "@/components/TypewriterText";
+import { useEffect, useState } from "react";
+
+const Contact = () => {
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowContent(true);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-black text-green-500 font-mono flex flex-col items-center justify-center p-4">
+      <ApocalypticBackground />
+      <div className="w-full max-w-3xl relative z-10">
+        <h1 className="text-3xl mb-6 text-center text-glow">
+          <TypewriterText text="Contact Me..." />
+        </h1>
+        {showContent && (
+          <div className="flex flex-col items-start space-y-2">
+            <span className="w-full">
+              <TypewriterText
+                text="Cellphone Number: 0729751755"
+                startDelay={500}
+              />
+            </span>
+            <span className="w-full">
+              <TypewriterText
+                text="Email: keitumetsemogotsif@gmail.com"
+                startDelay={4000}
+              />
+            </span>
+            <span className="w-full hover:text-green-300">
+              <TypewriterText
+                text="Linkedln: Keitumetse Mogotsi"
+                startDelay={7000}
+                href="https://www.linkedin.com/in/keitumetse-mogotsi-a6125910b/"
+                showCursorAfterTyping={true}
+              />
+            </span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Contact;

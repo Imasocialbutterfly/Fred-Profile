@@ -5,6 +5,7 @@ interface TypewriterTextProps {
   startDelay?: number;
   onComplete?: () => void;
   showCursorAfterTyping?: boolean
+  href?: string;
 }
 
 const TypewriterText = ({
@@ -12,6 +13,7 @@ const TypewriterText = ({
   startDelay = 0,
   onComplete,
   showCursorAfterTyping = false,
+  href,
 }: TypewriterTextProps) => {
   const [dispalyedText, setDisplayedText] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
@@ -48,7 +50,7 @@ const TypewriterText = ({
     return () => clearInterval(cursorBlinkInterval)
   }, [isTyping, showCursorAfterTyping])
 
-  return (
+  const content = (
     <span className="relative whitespace-pre-line">
       {dispalyedText}
         <span className="relative">
@@ -56,6 +58,12 @@ const TypewriterText = ({
         {cursorVisible && <span className="absolute right-0 top-0">|</span>}
       </span>
     </span>
+  )
+
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer">
+      {content}
+    </a>
   );
 };
 
