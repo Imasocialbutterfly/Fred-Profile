@@ -17,6 +17,10 @@ const About = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleBackclick = () => {
+    router.push('/?showPillChoice=true')
+  }
+
   return (
     <div className="min-h-screen text-green-500 font-mono flex flex-col items-center justify-center p-4">
       <BulletBackground />
@@ -60,6 +64,12 @@ const About = () => {
           </div>
         )}
       </div>
+      <button
+        onClick={handleBackclick}
+        className="absolute bottom-4 left-4 text-green-500 text-glow hover:text-green-400 transition-colors duration-300"
+      >
+        &lt; Back
+      </button>
     </div>
   );
 };

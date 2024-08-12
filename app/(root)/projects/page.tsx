@@ -1,9 +1,10 @@
-const Projects = () => {
-    return (
-        <div>
-            projects
-        </div>
-    )
-}
+"use client";
 
-export default Projects
+const Projects = () => {
+  return (
+    <div>
+    </div>
+  );
+};
+
+export default Projects;

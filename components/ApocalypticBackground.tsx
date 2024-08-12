@@ -11,16 +11,14 @@ const ApocalypticBackground = () => {
     if (!ctx) return;
 
     let animationId: number;
-    const circles: Circle[] = [];
-    const maxCircles = 15;
+    const lightbulbs: Lightbulb[] = [];
+    const maxLightbulbs = 2;
 
-    interface Circle {
+    interface Lightbulb {
       x: number;
       y: number;
       radius: number;
-      maxRadius: number;
-      rings: number;
-      points: { x: number; y: number }[];
+      isOn: boolean;
       life: number;
       maxLife: number;
     }
@@ -30,45 +28,27 @@ const ApocalypticBackground = () => {
       canvas.height = window.innerHeight;
     };
 
-    const createRuggedCircle = (x: number, y: number, radius: number, points: number) => {
-      const angleStep = (Math.PI * 2) / points;
-      const circlePoints = [];
-      for (let i = 0; i < points; i++) {
-        const angle = i * angleStep;
-        const randomRadius = radius * (0.9 + Math.random() * 0.2); // 10% variance
-        circlePoints.push({
-          x: x + Math.cos(angle) * randomRadius,
-          y: y + Math.sin(angle) * randomRadius
-        });
-      }
-      return circlePoints;
-    };
-
-    const createCircle = () => {
-      if (circles.length < maxCircles) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const maxRadius = Math.random() * 50 + 25;
-        const circle: Circle = {
-          x,
-          y,
-          radius: 0,
-          maxRadius,
-          rings: Math.floor(Math.random() * 5) + 3,
-          points: createRuggedCircle(x, y, maxRadius, 20),
+    const createLightbulb = () => {
+      if (lightbulbs.length < maxLightbulbs) {
+        const lightbulb: Lightbulb = {
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 10 + 15,
           life: 0,
-          maxLife: Math.random() * 200 + 100,
+          maxLife: 60,
+          isOn: true,
         };
-        circles.push(circle);
+        lightbulbs.push(lightbulb);
       }
     };
 
-    const updateCircles = () => {
-      for (let i = circles.length - 1; i >= 0; i--) {
-        circles[i].life++;
-        circles[i].radius = (circles[i].life / circles[i].maxLife) * circles[i].maxRadius;
-        if (circles[i].life > circles[i].maxLife) {
-          circles.splice(i, 1);
+    const updateLightbulbs = () => {
+      for (let i = lightbulbs.length - 1; i >= 0; i--) {
+        const bulb = lightbulbs[i];
+        bulb.life++;
+
+        if (bulb.life > bulb.maxLife) {
+          lightbulbs.splice(i, 1);
         }
       }
     };
@@ -79,33 +59,54 @@ const ApocalypticBackground = () => {
       ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      circles.forEach((circle) => {
-        const ringWidth = circle.radius / (circle.rings * 2);
-        for (let i = 0; i < circle.rings; i++) {
-          const ringRadius = (circle.radius / circle.rings) * (i + 1);
-          const opacity = 1 - (i / circle.rings) * 0.7;
+      lightbulbs.forEach((bulb) => {
+        const intensity = Math.sin((bulb.life / bulb.maxLife) * Math.PI);
+
+        if (intensity > 0) {
           ctx.beginPath();
-          circle.points.forEach((point, index) => {
-            const scale = ringRadius / circle.maxRadius;
-            const x = circle.x + (point.x - circle.x) * scale;
-            const y = circle.y + (point.y - circle.y) * scale;
-            if (index === 0) {
-              ctx.moveTo(x, y);
-            } else {
-              ctx.lineTo(x, y);
-            }
-          });
+          ctx.moveTo(bulb.x - bulb.radius * 0.2, bulb.y + bulb.radius * 0.6);
+          ctx.lineTo(bulb.x + bulb.radius * 0.2, bulb.y + bulb.radius * 0.6);
+          ctx.lineTo(bulb.x + bulb.radius * 0.3, bulb.y + bulb.radius);
+          ctx.lineTo(bulb.x - bulb.radius * 0.3, bulb.y + bulb.radius);
           ctx.closePath();
-          ctx.strokeStyle = `rgba(0, 255, 0, ${opacity})`;
-          ctx.lineWidth = ringWidth;
+          ctx.fillStyle = `rgba(100, 100, 100, ${intensity})`;
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(bulb.x, bulb.y, bulb.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 200, ${intensity * 0.5})`;
+          ctx.fill();
+
+          const gradient = ctx.createRadialGradient(
+            bulb.x,
+            bulb.y,
+            bulb.radius * 0.5,
+            bulb.x,
+            bulb.y,
+            bulb.radius * 2
+          );
+          gradient.addColorStop(0, `rgba(0, 255, 0, ${intensity * 0.8})`);
+          gradient.addColorStop(1, `rgba(0, 255, 0, 0)`);
+          ctx.beginPath();
+          ctx.arc(bulb.x, bulb.y, bulb.radius * 2, 0, Math.PI * 2);
+          ctx.fillStyle = gradient;
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.moveTo(bulb.x - bulb.radius * 0.3, bulb.y);
+          ctx.lineTo(bulb.x - bulb.radius * 0.1, bulb.y - bulb.radius * 0.2);
+          ctx.lineTo(bulb.x + bulb.radius * 0.1, bulb.y + bulb.radius * 0.2);
+          ctx.lineTo(bulb.x + bulb.radius * 0.3, bulb.y);
+          ctx.strokeStyle = `rgba(150, 255, 150, ${intensity})`;
+          ctx.lineWidth = 2;
           ctx.stroke();
         }
       });
     };
 
     const animate = () => {
-      createCircle();
-      updateCircles();
+      if (Math.random() < 0.05) createLightbulb();
+      updateLightbulbs();
       draw();
       animationId = requestAnimationFrame(animate);
     };

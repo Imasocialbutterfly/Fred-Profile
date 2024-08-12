@@ -3,11 +3,12 @@
 import MatrixBackground from "@/components/MatrixBackground";
 import TypewriterText from "@/components/TypewriterText";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Home = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [showTitle, setShowTitle] = useState(true);
   const [showImageAndPath, setShowImageAndPath] = useState(false);
@@ -15,15 +16,22 @@ const Home = () => {
   const [firstTextComplete, setFirstTextComplete] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const showPillChoiceParam = searchParams.get("showPillChoice");
+    if (showPillChoiceParam === "true") {
       setShowTitle(false);
-      setShowImageAndPath(true);
-    }, 10000);
+      setShowImageAndPath(false);
+      setShowPillChoice(true);
+    } else {
+      const timer = setTimeout(() => {
+        setShowTitle(false);
+        setShowImageAndPath(true);
+      }, 10000);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [searchParams]);
 
   const handleImageClick = () => {
     setShowImageAndPath(false);

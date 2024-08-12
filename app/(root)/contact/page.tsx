@@ -2,10 +2,12 @@
 
 import ApocalypticBackground from "@/components/ApocalypticBackground";
 import TypewriterText from "@/components/TypewriterText";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Contact = () => {
   const [showContent, setShowContent] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -14,6 +16,10 @@ const Contact = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleBackclick = () => {
+    router.push("/?showPillChoice=true");
+  };
 
   return (
     <div className="min-h-screen bg-black text-green-500 font-mono flex flex-col items-center justify-center p-4">
@@ -47,6 +53,12 @@ const Contact = () => {
           </div>
         )}
       </div>
+      <button
+        onClick={handleBackclick}
+        className="absolute bottom-4 left-4 text-green-500 text-glow hover:text-green-400 transition-colors duration-300 z-20"
+      >
+        &lt; Back
+      </button>
     </div>
   );
 };
