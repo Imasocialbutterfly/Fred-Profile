@@ -66,7 +66,7 @@ const About = () => {
       </div>
       <button
         onClick={handleBackclick}
-        className="absolute bottom-4 left-4 text-green-500 text-glow hover:text-green-400 transition-colors duration-300"
+        className="fixed bottom-4 left-4 text-green-500 text-glow hover:text-green-400 transition-colors duration-300"
       >
         &lt; Back
       </button>

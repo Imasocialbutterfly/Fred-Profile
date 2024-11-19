@@ -12,8 +12,8 @@ const CircuitBoardBackground = () => {
 
     let animationId: number;
     const lines: { points: { x: number; y: number }[] }[] = [];
-    const lineColor = "#0066cc";
-    const backgroundColor = "#000000";
+    const lineColor = "#00ff00";
+    const backgroundColor = "#010101";
     const gridSize = 30;
     const lineWidth = 2;
     let surgeProgress = 0;
@@ -75,17 +75,18 @@ const CircuitBoardBackground = () => {
       points.forEach((point) => {
         ctx.beginPath();
         ctx.arc(point.x, point.y, lineWidth, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(0, 255, 0, 0.3)"
         ctx.fill();
       });
 
       const surgeStart = surgeProgress % 1;
       const surgeEnd = (surgeProgress + 0.1) % 1;
       const gradient = ctx.createLinearGradient(points[0].x, points[0].y, points[points.length - 1].x, points[points.length - 1].y);
-      gradient.addColorStop(Math.max(0, surgeStart - 0.1), "rgba(0, 255, 255, 0)");
-      gradient.addColorStop(surgeStart, "rgba(0, 255, 255, 0.8)");
-      gradient.addColorStop(surgeEnd, "rgba(0, 255, 255, 0.8)");
-      gradient.addColorStop(Math.min(1, surgeEnd + 0.1), "rgba(0, 255, 255, 0)");
-      
+      gradient.addColorStop(Math.max(0, surgeStart - 0.1), "rgba(0, 255, 0, 0)");
+      gradient.addColorStop(surgeStart, "rgba(0, 255, 0, 0.8)");
+      gradient.addColorStop(surgeEnd, "rgba(0, 255, 0, 0.8)");
+      gradient.addColorStop(Math.min(1, surgeEnd + 0.1), "rgba(0, 255, 0, 0)");
+
       ctx.strokeStyle = gradient;
       ctx.lineWidth = lineWidth * 2;
       ctx.stroke();
@@ -103,11 +104,7 @@ const CircuitBoardBackground = () => {
         drawLine(line);
       });
 
-      surgeProgress += 0.005;
-      if (surgeProgress > 2) {
-        surgeProgress = 0;
-      }
-
+      surgeProgress = (surgeProgress + 0.005) % 2
       animationId = requestAnimationFrame(draw);
     };
 

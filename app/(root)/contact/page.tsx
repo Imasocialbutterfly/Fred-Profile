@@ -44,7 +44,7 @@ const Contact = () => {
             </span>
             <span className="w-full hover:text-green-300">
               <TypewriterText
-                text="Linkedln: Keitumetse Mogotsi"
+                text="Linkedln: https://www.linkedin.com/in/keitumetse-mogotsi-a6125910b/"
                 startDelay={7000}
                 href="https://www.linkedin.com/in/keitumetse-mogotsi-a6125910b/"
                 showCursorAfterTyping={true}
@@ -55,7 +55,7 @@ const Contact = () => {
       </div>
       <button
         onClick={handleBackclick}
-        className="absolute bottom-4 left-4 text-green-500 text-glow hover:text-green-400 transition-colors duration-300 z-20"
+        className="fixed bottom-4 left-4 text-green-500 text-glow hover:text-green-400 transition-colors duration-300 z-20"
       >
         &lt; Back
       </button>
