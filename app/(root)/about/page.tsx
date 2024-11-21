@@ -50,7 +50,7 @@ const About = () => {
             </span>
             <span className="w-full">
               <TypewriterText
-                text="Projects: Four fullstack projects on Github, featuring React, MongoDB, and Prisma"
+                text="Projects: Four fullstack projects on Github, featuring React, PostgreSQL, and TailwindCSS"
                 startDelay={22000}
               />
             </span>

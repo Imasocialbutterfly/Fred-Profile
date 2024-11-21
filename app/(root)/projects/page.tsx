@@ -30,34 +30,34 @@ const Projects = () => {
           <TypewriterText text="Projects..." />
         </h1>
         {showContent && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
             <ProjectCard
-              imageSrc={""}
-              projectName={""}
-              projectType={""}
-              projectEcosystem={""}
-              gitRepo=""
+              imageSrc="/Screenshot (101).png"
+              projectName="Amazon Clone"
+              projectType="Fullstack"
+              projectEcosystem="React, Firebase, TailwindCSS"
+              gitRepo="https://github.com/Imasocialbutterfly/amazon-clone-withReactAndRedux"
             />
             <ProjectCard
-              imageSrc={""}
-              projectName={""}
-              projectType={""}
-              projectEcosystem={""}
-              gitRepo=""
-            />
-            <ProjectCard
-              imageSrc={""}
-              projectName={""}
-              projectType={""}
-              projectEcosystem={""}
+              imageSrc="/Screenshot (102).png"
+              projectName="Spotify Clone"
+              projectType="Fullstack"
+              projectEcosystem="NextJS, React, Stripe, Supabase, PostgreSQL, TailwindCSS"
               gitRepo="https://github.com/Imasocialbutterfly/SpotifyCLone-By-Fred"
             />
             <ProjectCard
-              imageSrc={""}
-              projectName={""}
-              projectType={""}
-              projectEcosystem={""}
-              gitRepo=""
+              imageSrc="/Screenshot (104).png"
+              projectName="Duolingo Clone"
+              projectType="Fullstack"
+              projectEcosystem="NextJS, React, Drizzle ORM, Stripe, TailwindCSS"
+              gitRepo="https://github.com/Imasocialbutterfly/duolingo-clone"
+            />
+            <ProjectCard
+              imageSrc="/Screenshot (120).png"
+              projectName="Tic Tac Toe"
+              projectType="React"
+              projectEcosystem="Frontend"
+              gitRepo="https://github.com/Imasocialbutterfly/TicTacToe"
             />
           </div>
         )}

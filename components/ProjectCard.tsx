@@ -18,8 +18,8 @@ const ProjectCard = ({
   gitRepo,
 }: ProjectCardProps) => {
   return (
-    <div className="flex gap-8 items-start">
-      <div className="w-40 h-40 flex-shrink-0 relative cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 group">
+    <div className="flex flex-col md:flex-row gap-4 items-center md:items-start w-full max-w-full overflow-hidden">
+      <div className="w-32 h-32 md:w-40 md:h-40 flex-shrink-0 relative cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 group">
         <Image
           src={imageSrc}
           alt={projectName}
@@ -28,8 +28,8 @@ const ProjectCard = ({
           style={{ objectFit: "cover" }}
         />
       </div>
-      <div className="flex-grow flex flex-col gap-4">
-        <span className="w-full">
+      <div className="flex-grow flex flex-col gap-2 text-center md:text-left w-full overflow-hidden px-2">
+        <span className="w-full overflow-hidden text-ellipsis whitespace-nowrap">
           <TypewriterText
             text={`Project Name: ${projectName}`}
             startDelay={500}
