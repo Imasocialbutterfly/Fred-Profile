@@ -4,9 +4,9 @@ import MatrixBackground from "@/components/MatrixBackground";
 import TypewriterText from "@/components/TypewriterText";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 
-const Home = () => {
+function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -139,6 +139,14 @@ const Home = () => {
         )}
       </div>
     </div>
+  );
+}
+
+const Home = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 };
 
